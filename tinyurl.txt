@@ -1,0 +1,71 @@
+﻿-  TinyURL
+    - User can shorten a lengthy URL
+    - User can browse with a shortened URL which will redirect to original URL
+    - User Subscription Plans: 
+Guest Plan - 1 URL per day 
+Silver Plan - 10 URLs per day 
+Gold Plan - 1000 URLS per month
+ Platinum Plan - Unlimited URLs per month
+    - All URLs expire in 30 days post creation
+
+
+
+
+Non functional
+* Scalabale 
+* Highly Available
+* Low Latency (while redirecting)
+
+
+Estiatimations
+        Total Users: 
+        DAU - 10k
+        Redirects: 10k per url per day
+        Total requests: 1k url per user per day
+                Total: 10K * 1k = 10 million urls / day
+        Storage - 
+                7 characters, 100 characters
+                1kb * 10 m urls/day =  10 TB / day
+        
+        Bandwidth
+                New Urls: 10TB/day
+                        Each second: 10TB/day / 100k seconds =  
+                Redirects:
+                        (300 million * 10k) permonth 
+                                Each second: (300 million * 10k) permonth / 30 * 100k seconds = 1 million / second
+                        Size: 1 million * 1kb = 1Tb/second 
+                Total Bawith = 1TB/secnd + (10TB/day / 100k seconds)
+
+
+
+
+Design
+        Algorithm
+* Url genkey A-Za-z0-9
+* Take random 7 positions
+* Check if the formed url is used if not generate another 
+Components
+
+
+TinyUrl Service
+- GenerateTinyUrl(String url)
+- redirect(String tinyurl) : string url
+
+
+                                
+Database - DynamoDB
+        tinyurl, original_url, updated_at, expired_at (SortKey), user_id
+
+
+   Generated_url_table
+        tinyurl
+                                        
+                                        Subscription Plans
+                                                Id, planname, url_count
+                                                
+                                Redis
+                                        User_id, day_date, generated_count, user_plan_count, 
+Ttl
+                        
+                                User
+                                        Username, name, subcription_plan

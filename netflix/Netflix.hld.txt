@@ -1,0 +1,121 @@
+﻿Core User Flow (Video) , low latency with high availability
+Recommendation Engine
+200 M users
+Data
+- Video
+- user metadata
+- video metadata
+- logs
+Estimations
+- 100K videos
+- 60 mins average length
+ - 2160p 
+ -1080p
+ - 720p
+ - 480p
+ - 360p
+ - 240p
+- 144p 
+
+
+Storage
+Video:
+ 2160p:
+  FPS: 24
+  Audio:
+  Size of 1 min video: 300MB
+  Size of 60 mins video = 300MB * 60 min = 18000MB = 18GB ~= 20GB
+ Total size for 100K videos = 100K * 20 = 2 PB 
+ Total size for all formats: 2PB * 2 = 4 PB 
+ Replication over 10 regions = 4PB * 10 = 40PB 
+ Video files in Blob Store like S3
+
+
+Bandwidth Estimations:
+Video Read/Stream
+10M users at peak
+Per hour bandwith for 1 user 20GB/hr = 5.6 MB/sec
+Per hour bandwidth 10 million users: 10M * 20GB/hr = 20PB/hr = 5.6 TB/sec
+Use Content Delivery Network with multiple Point of Presence
+Caching at Internet Exchange Point
+
+
+
+
+Video processing
+1000 videos a day
+1hr length
+20GB * 1000 = 20TB/day
+For all resolutions = 20TB * 2 = 40TB/day
+40TB/864000sec = 463 MB/sec
+
+
+Read   +   Process  + Write
+(10ms  +   20ms       + 20ms) = 50ms/MB
+
+
+Work To done = 463mb * (50 * 10^-3)sec = 23.1sec/sec
+
+
+
+
+
+
+User Metadata:
+User watches 10K videos in lifetime
+
+
+Watched
+user_id, video_id, video_offset, created_at, updated_at
+
+
+
+
+Tables for User Metadata
+
+
+MySQL
+Users
+user_id, user_name, country
+
+
+User_Subscription
+
+
+User_payment_info
+
+
+Payments
+
+
+
+
+Video Metadata
+Thumbnails stored in S3
+1 Thumbnail = 10KB
+10KB * 100K = 1GB
+Replication for 10 regions = 1GB * 10 = 10GB
+Cached (LRU) Thumbnails for popular videos = 10KB * 10K = 100MB
+Replicated across regions = 100MB * 10 regions = 1GB in RAM
+
+
+Cassandra
+Videos
+video_id, pixel, offset, blob_store_url,  status, uploaded_by, thumbnail_url, name, description, created_at, uploaded_at
+
+
+
+
+Masterdata
+Country__region__mapping
+
+
+
+
+
+
+
+
+
+Diagram
+https://drive.google.com/file/d/1wgPmWTmEOyldzGcNwoJ8vhETngTE9PhF/view?usp=sharing
