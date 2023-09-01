@@ -1,12 +1,12 @@
-﻿-  TinyURL
-    - User can shorten a lengthy URL
-    - User can browse with a shortened URL which will redirect to original URL
-    - User Subscription Plans: 
-Guest Plan - 1 URL per day 
-Silver Plan - 10 URLs per day 
-Gold Plan - 1000 URLS per month
- Platinum Plan - Unlimited URLs per month
-    - All URLs expire in 30 days post creation
+TinyURL
+- User can shorten a lengthy URL
+- User can browse with a shortened URL which will redirect to original URL
+- User Subscription Plans: 
+	Guest Plan    - 1 URL per day 
+	Silver Plan   - 10 URLs per day 
+	Gold Plan     - 1000 URLS per month
+	Platinum Plan - Unlimited URLs per month
+- All URLs expire in 30 days post creation
 
 
 
@@ -56,16 +56,18 @@ TinyUrl Service
 Database - DynamoDB
         tinyurl, original_url, updated_at, expired_at (SortKey), user_id
 
-
-   Generated_url_table
-        tinyurl
+Generated_url_table
+  tinyurl
+  
+utilized_url_table
+  tinyurl
+                                    
                                         
-                                        Subscription Plans
-                                                Id, planname, url_count
-                                                
-                                Redis
-                                        User_id, day_date, generated_count, user_plan_count, 
-Ttl
+Subscription Plans
+        Id, planname, url_count
+        
+Redis
+User_id, day_date, generated_count, user_plan_count, Ttl
                         
                                 User
                                         Username, name, subcription_plan
