@@ -1,0 +1,1 @@
+- low latency bidirectional communication initiated via HTTP useful for sending and receiving data using text, binary array or blobs. providing full duplex communication channel over a single TCP connection. 
