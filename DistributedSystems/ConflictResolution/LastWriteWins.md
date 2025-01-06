@@ -1,0 +1,1 @@
+- Dynamo also offers ways to resolve the conflicts automatically on the server-side.

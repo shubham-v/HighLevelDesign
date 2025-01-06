@@ -1,0 +1,12 @@
+Ability of a system to continue operating without interruption when one or more of it's components fail.
+
+- Both HA & FT have same objective that system runs all the time without any disruption
+- FT can be a improved version of HA, as it can tolerate any component failure or data loss by having redundant resources beyond what is typically needed.
+
+- Circuit breaker
+- Bulkhead
+- Load Balancing
+- Service Balancing
+- Broadcasting Messages
+- Active-Active, Active-Passive
+- Place replicas in different racks
