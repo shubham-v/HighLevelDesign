@@ -82,6 +82,44 @@ Monitored
 ### Paginated
 /files?&size={size}&cursor={Base64EncodedCursor}
 /files/{fileId}/chunks/{chunksId}?size={size}&cursor={Base64EncodedCursor}
+/updates?lastEventId={lastEventId}&timeout={timeoutInSeconds} (Long Polling)
+### Response
+200 OK
+```json
+    {
+  "events": [
+    {
+      "event_id": "evt_123",
+      "type": "file_created",
+      "timestamp": "2023-09-01T12:00:00Z",
+      "data": {
+        "file_id": "file_abc",
+        "path": "/Documents/report.pdf",
+        "version": 3
+      }
+    },
+    {
+      "event_id": "evt_456",
+      "type": "file_updated",
+      "timestamp": "2023-09-01T12:05:00Z",
+      "data": {
+        "file_id": "file_def",
+        "path": "/Photos/image.jpg",
+        "version": 2
+      }
+    }
+  ]
+}
+```
+400
+```json
+{ "error": "Timeout exceeds limit" }
+```
+410
+```json
+{ "error": "Reset required" }
+```
+
 ## PATCH
 /files/{file_id}
 ### Request
