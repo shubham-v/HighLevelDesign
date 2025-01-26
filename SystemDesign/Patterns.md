@@ -296,8 +296,7 @@ are forwarded to them based on the hints stored.
   data to nodes with the older versions.
 
 # Merkle Trees
-- A binary tree o0f hashes where each internal node is the hash of it's two children & each leaf node is a hash of a portion of the original data. 
+- 
 - A replica can contain a lot of data. Naively splitting up the entire range to calculate checksums for comparison is not very feasible; 
-  there is simply too much data to be transferred. Instead, we can use Merkle trees to compare replicas of a range.
-- For anti-entropy & to resolve conflicts in the background Dynamo uses Merkle Trees.
+  there is simply too much data to be transferred. Instead we can use Merkle trees to compare replicas of a range.
 - 

@@ -91,6 +91,93 @@ java -Xlog:gc*:file=gc.log
 
 # Deprecation of Applet API
 
+# finalize() deprecated
+Alternatives
+- implement the AutoCloseable interface and use try-with-resources
+- Provide a method (e.g., close(), dispose()) in your class to allow manual resource cleanup.
+- Use java.lang.ref.Cleaner or java.lang.ref.PhantomReference for advanced scenarios requiring cleanup.
+
+## java.lang.ref.Cleaner example
+```java
+import java.lang.ref.Cleaner;
+
+public class CleanerExample {
+    // Create a Cleaner instance
+    private static final Cleaner cleaner = Cleaner.create();
+
+    // Resource that requires cleanup
+    static class Resource implements AutoCloseable {
+        private boolean cleanedUp = false;
+
+        // Associate the resource with a cleanup action
+        private final Cleaner.Cleanable cleanable;
+
+        Resource() {
+            cleanable = cleaner.register(this, new CleanupAction());
+        }
+
+        @Override
+        public void close() {
+            cleanable.clean();
+        }
+
+        // Cleanup action
+        private static class CleanupAction implements Runnable {
+            @Override
+            public void run() {
+                System.out.println("Cleaning up resource...");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        try (Resource resource = new Resource()) {
+            System.out.println("Using resource...");
+        }
+        // Resource is automatically cleaned up when close() is called
+    }
+}
+```
+## java.lang.ref.PhantomReference
+```java
+import java.lang.ref.PhantomReference;
+import java.lang.ref.ReferenceQueue;
+
+public class PhantomReferenceExample {
+    public static void main(String[] args) throws InterruptedException {
+        // Create a ReferenceQueue
+        ReferenceQueue<Object> referenceQueue = new ReferenceQueue<>();
+
+        // Create an object and its PhantomReference
+        Object obj = new Object();
+        PhantomReference<Object> phantomReference = new PhantomReference<>(obj, referenceQueue);
+
+        // Start a thread to monitor the ReferenceQueue
+        Thread cleanerThread = new Thread(() -> {
+            try {
+                referenceQueue.remove(); // Wait for the reference to be enqueued
+                System.out.println("Object is about to be collected. Perform cleanup here.");
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+        cleanerThread.setDaemon(true);
+        cleanerThread.start();
+
+        // Clear strong reference to the object
+        obj = null;
+
+        // Request garbage collection
+        System.gc();
+
+        // Wait for a bit to ensure GC happens
+        Thread.sleep(1000);
+
+        System.out.println("Main thread finished.");
+    }
+}
+```
+
 # Multi-Release JAR Files
 Allows a single JAR file to support multiple Java versions.
 - Place version-specific classes in a META-INF/versions directory.

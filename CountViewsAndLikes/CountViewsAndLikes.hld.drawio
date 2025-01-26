@@ -331,7 +331,7 @@
             <mxPoint x="200" y="1069" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="x5Q5SPVU8qtSfG2cZvHa-222" value="NoSQL Database (Caasandra)&lt;br&gt;Eventual/Tunable Consistency/Availability over Consistency" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="x5Q5SPVU8qtSfG2cZvHa-222" value="Databases.NoSQL Database (Caasandra)&lt;br&gt;Eventual/Tunable Consistency/Availability over Consistency" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="80" y="845" width="180" height="20" as="geometry" />
         </mxCell>
         <mxCell id="x5Q5SPVU8qtSfG2cZvHa-223" value="" style="endArrow=classic;startArrow=classic;html=1;" edge="1" parent="1">
