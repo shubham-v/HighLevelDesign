@@ -148,6 +148,7 @@ DELETE /files/{file_id}   -> 204 no content
 # DB 
 ## Schema
 files
+-----
 id uuid (PK)
 size bigint not null
 status varchar(16) (CREATED/UPLOADED/DELETED)
@@ -159,6 +160,7 @@ account_id (FK account.id) not null (INDEX)
 constraint (parent_directory_id != id)
 
 files_versions
+--------------
 id uuid (PK)
 file_id uuid (Fk files.id)
 version int not null
@@ -169,6 +171,7 @@ checksum varchar(255) (UK)
 UK (file_id, version)
 
 chunks
+------
 id uuid (PK)
 file_id (FK files.id)
 checksum varchar(255) INDEX
@@ -180,11 +183,19 @@ dfs_key uuid not null
 UK (dfs_bucket, dfs_key, checksum)
 
 chunk_versions
+--------------
 id uuid PK
 files_version_id uuid (FK files_versions.id)
 chunk_id uuid (FK chunks.id)
 chunk_order int not null
 UK (chunk_order int not null, chunk_id, chunk_order)
+
+devices
+-------
+id uuid (PK)
+account_id uuid (FK accounts.id)
+device_type varchar(16) (APN/GCM/Desktop)
+token text
 
 ## Sharding
 PartitionKey= account_id
