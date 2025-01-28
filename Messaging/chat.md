@@ -40,7 +40,7 @@ Media = (10M * 1MB * 365) =
 
 # Detailed Design
 ## HighLevelDesign
-![Messaging-HLD.png](Messaging-HLD.png)
+![Messaging-HLD.png](HLD-Chat.png)
 
 ## APIs
 #### GET
