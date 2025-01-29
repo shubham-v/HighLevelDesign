@@ -114,3 +114,7 @@ desc text
 2. stateful connection
 3. uses hearbeat mechanism 
 4. ttl: 
+5. a connection can be upgraded via a load balancer to WebSocket, but you need to ensure that:
+   - The load balancer supports WebSocket connections and is properly configured.
+   - Session persistence is enabled if you're using multiple backend servers.
+   - Both the client and server are properly configured to handle WebSocket connections.
